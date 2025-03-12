@@ -1,0 +1,100 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block body %}
+
+
+    <style>
+        .destination-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .destination-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+
+
+
+    <section class="container mt-5">
+        <h2 class="text-center mb-4"><b>Top Destinations</b></h2>
+        <div class="row" id="cards-container">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            let data = [];
+            try {
+                let response = await fetch("https://629d-2409-40c0-103f-3eeb-c66-bddb-d256-29e.ngrok-free.app/Destination/", {
+                    headers: { "Ngrok-Skip-Browser-Warning": "true" }
+                });
+                data = await response.json();
+            } catch (error) {
+                console.error("Error fetching data. Using hardcoded fallback data.", error);
+                data = [
+                    {
+                        "id": 1,
+                        "url": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/Destination/1/",
+                        "Image": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/media/Destination/gotest_1VUKlOB.jpeg",
+                        "Name": "Test",
+                        "Destination": "Goa ki planning"
+                    },
+                    {
+                        "id": 2,
+                        "url": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/Destination/2/",
+                        "Image": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/media/Destination/gotest_mM1V2IR.jpeg",
+                        "Name": "Test 2",
+                        "Destination": "Test Destination"
+                    },
+                    {
+                        "id": 3,
+                        "url": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/Destination/2/",
+                        "Image": "http://60ed-2402-3a80-428a-d8f7-ddd-678a-d9d-13e3.ngrok-free.app/media/Destination/gotest_mM1V2IR.jpeg",
+                        "Name": "Test 3",
+                        "Destination": "Test Destination"
+                    }
+                ];
+            }
+            renderCards(data);
+        });
+    
+        function renderCards(cards) {
+            const container = document.getElementById("cards-container");
+            container.innerHTML = "";
+    
+            cards.forEach((card) => {
+                const cardHtml = `
+                    <div class="col-md-4 mb-4"> 
+                        <div class="card" style="width: 100%;"> 
+                            <img src="${card.Image}" class="card-img-top" alt="${card.Name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${card.Name}</h5>
+                                <p class="card-text">${card.Destination}</p>
+                                <a href="{% url 'detail' %}?id=${card.id}" class="btn btn-info">More Info</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML("beforeend", cardHtml);
+            });
+        }
+    
+        function confirmTrip() {
+            alert("Trip Confirmed! Details will be sent to your email.");
+        }
+    </script>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+{% endblock body %}
