@@ -34,3 +34,12 @@ def destination_view(request):
 
 def contact_view(request):
     return render(request, 'contact.html')
+
+def itinerary_planner(request):
+    return render(request, 'itinerary_planner.html')
+
+def cultural_experiences(request):
+    return render(request, 'cultural_experiences.html')
+
+def sustainable_travel(request):
+    return render(request, 'sustainable_travel.html')

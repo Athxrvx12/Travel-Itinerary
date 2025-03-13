@@ -5,168 +5,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Travel Itinerary</title>
+    <title>Incredible India | Travel Itinerary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* General Styling */
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
         }
 
-        /* Navbar */
+        /* Enhanced Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.1); /* Transparent White */
-            backdrop-filter: blur(10px); /* Blur Effect */
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar a {
-            color: black !important; /* Ensure links are readable */
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .navbar-nav .nav-link.active {
-            color: #007bff !important; /* Highlight active link */
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(5px);
         }
 
-        /* Hero Section */
-        .hero-section {
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin: 0 15px;
             position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
             width: 100%;
+        }
+
+        /* Hero Section Improvements */
+        .hero-section {
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            text-align: center;
+            position: relative;
             overflow: hidden;
         }
 
-        .hero-section video {
+        .hero-video {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
             z-index: -1;
         }
 
+        .hero-overlay {
+            background: linear-gradient(45deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+        }
+
         .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px); 
-            border-radius: 20px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: bold;
-        }
-
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
+        .cta-button {
+            background: var(--primary-color);
             border: none;
-            padding: 12px 20px;
+            padding: 15px 40px;
             font-size: 1.2rem;
-            border-radius: 10px;
-            transition: all 0.3s ease-in-out;
+            border-radius: 30px;
+            transition: transform 0.3s ease;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background: #ff5252;
+        }
+
+        /* Destination Cards */
+        .destination-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* Cultural Highlights Section */
+        .cultural-section {
+            padding: 100px 0;
+            background: linear-gradient(45deg, #f8f9fa, #ffffff);
+        }
+
+        .cultural-card {
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        /* Sustainability Section */
+        .sustainability-section {
+            background: var(--secondary-color);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .eco-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Travel Itinerary</a>
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/india-flag-icon.png' %}" alt="Logo" width="40" class="me-2">
+                Incredible India
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="flex space-x-4">
-                    <li><a href="{% url 'home' %}" class="hover:text-gray-300">Home</a></li>
-                    <li><a href="{% url 'about' %}" class="hover:text-gray-300">About</a></li>
-                    <li><a href="{% url 'destination' %}" class="hover:text-gray-300">Destinations</a></li>
-                    <li><a href="{% url 'contact' %}" class="hover:text-gray-300">Contact</a></li>
-                    <li><a href="{% url 'login' %}" class="hover:text-gray-300">Login</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cultural-experiences' %}">Cultural Experiences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'itinerary-planner' %}">Plan Trip</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sustainable-travel' %}">Sustainable Travel</a>
+                    </li>
                 </ul>
-                
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero-section">
-        <video autoplay muted loop playsinline>
-            <source src="{% static 'videos/about_bg.mp4' %}" type="video/mp4">
-            Your browser does not support the video tag.
+        <div class="hero-overlay"></div>
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="{% static 'videos/india_hero.mp4' %}" type="video/mp4">
+            <img src="{% static 'images/hero-fallback.jpg' %}" alt="India Landscape">
         </video>
-        <div class="hero-content">
-            <h1>Explore the World with Us</h1>
-            <p>Your adventure starts here</p>
-            <a href="{% url 'destination' %}" class="btn btn-primary btn-lg">Get Started</a>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center text-white hero-content">
+                    <h1 class="display-3 fw-bold mb-4">Discover India's Soul</h1>
+                    <p class="lead mb-5">Curated journeys through 5000 years of culture</p>
+                    <a href="{% url 'itinerary-planner' %}" class="btn cta-button">Start Your Adventure</a>
+                </div>
+            </div>
         </div>
     </header>
-  <!-- Featured Destinations --> <hr>
-  <section id="destinations" class="container py-5">
-    <h2 class="text-center mb-4">Top Destinations</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card destination-card">
-                <img src="/static/images/goa.jpg" class="card-img-top" alt="Goa">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Goa</h5>
-                    <p class="card-text">Beaches, nightlife, and adventure.</p>
-                    <a href="#" class="btn btn-outline-primary">Discover</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card destination-card">
-                <img src="/static/images/jaipur.jpg" class="card-img-top" alt="Jaipur">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Jaipur</h5>
-                    <p class="card-text">The Pink City with royal heritage.</p>
-                    <a href="#" class="btn btn-outline-primary">Discover</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card destination-card">
-                <img src="/static/images/manali.jpg" class="card-img-top" alt="Manali">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Manali</h5>
-                    <p class="card-text">Mountains, snow, and adventure.</p>
-                    <a href="#" class="btn btn-outline-primary">Discover</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 Travel India. All Rights Reserved.</p>
-</footer>
+    <!-- Featured Destinations -->
+    <section class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Featured Destinations</h2>
+            <div class="eco-badge d-inline-block">Carbon-Neutral Tours Available</div>
+        </div>
+        <div class="row g-4">
+            <!-- Goa Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="destination-card">
+                    <img src="{% static 'images/goa.jpg' %}" class="card-img-top" alt="Goa Beaches">
+                    <div class="card-body">
+                        <h5 class="card-title">Goa Coastal Trails</h5>
+                        <p class="card-text text-muted">Explore Portuguese heritage beaches</p>
+                        <div class="d-grid">
+                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-{% comment %} <script src="/static/script.js"></script> {% endcomment %}
+            <!-- Rajasthan Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="destination-card">
+                    <img src="{% static 'images/rajasthan.jpg' %}" class="card-img-top" alt="Rajasthan Forts">
+                    <div class="card-body">
+                        <h5 class="card-title">Royal Rajasthan</h5>
+                        <p class="card-text text-muted">Desert palaces & cultural festivals</p>
+                        <div class="d-grid">
+                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kerala Card -->
+            <div class="col-lg-4 col-md-6">
+                <div class="destination-card">
+                    <img src="{% static 'images/kerala.jpg' %}" class="card-img-top" alt="Kerala Backwaters">
+                    <div class="card-body">
+                        <h5 class="card-title">Kerala Serenity</h5>
+                        <p class="card-text text-muted">Backwaters & Ayurvedic retreats</p>
+                        <div class="d-grid">
+                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Highlights Section -->
+    <section class="cultural-section">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-md-6">
+                    <img src="{% static 'images/diwali.jpg' %}" alt="Diwali Festival" class="img-fluid rounded-3">
+                </div>
+                <div class="col-md-6">
+                    <h3 class="fw-bold mb-4">Cultural Immersion</h3>
+                    <p class="lead text-muted">Experience authentic Indian traditions:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fas fa-music me-2 text-primary"></i>Classical dance workshops</li>
+                        <li class="mb-3"><i class="fas fa-utensils me-2 text-primary"></i>Regional cooking classes</li>
+                        <li class="mb-3"><i class="fas fa-hands-praying me-2 text-primary"></i>Spiritual retreats</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript Enhancements -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('navbar-scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>

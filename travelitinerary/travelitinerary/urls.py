@@ -13,5 +13,9 @@ urlpatterns = [
     path('destination/', destination_view, name='destination'),
     path('contact/', contact_view, name='contact'),
     path('Destinations', views.destination_view, name='destination_alt'),  # New alias
+    path('cultural-experiences/', views.cultural_experiences, name='cultural-experiences'),
+    path('itinerary-planner/', views.itinerary_planner, name='itinerary-planner'),
+    path('sustainable-travel/', views.sustainable_travel, name='sustainable-travel'),
+
 ]
 
