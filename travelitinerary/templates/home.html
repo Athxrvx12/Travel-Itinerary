@@ -180,6 +180,14 @@
         html {
             scroll-behavior: smooth;
         }
+
+        footer {
+            background:rgb(57, 60, 62);
+            text-align: center;
+            padding: 7px 0;
+            font-size: 0.9rem;
+            color: white;  
+        }
     </style>
 </head>
 <body>
@@ -237,50 +245,61 @@
             <h2 class="display-5 fw-bold mb-3">Featured Destinations</h2>
             <div class="eco-badge d-inline-block">Carbon-Neutral Tours Available</div>
         </div>
-        <div class="row g-4">
-            <!-- Goa Card -->
-            <div class="col-lg-4 col-md-6">
-                <div class="destination-card">
-                    <img src="{% static 'images/goa.jpg' %}" class="card-img-top" alt="Goa Beaches">
-                    <div class="card-body">
-                        <h5 class="card-title">Goa Coastal Trails</h5>
-                        <p class="card-text text-muted">Explore Portuguese heritage beaches</p>
-                        <div class="d-grid">
-                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Rajasthan Card -->
-            <div class="col-lg-4 col-md-6">
-                <div class="destination-card">
-                    <img src="{% static 'images/rajasthan.jpg' %}" class="card-img-top" alt="Rajasthan Forts">
-                    <div class="card-body">
-                        <h5 class="card-title">Royal Rajasthan</h5>
-                        <p class="card-text text-muted">Desert palaces & cultural festivals</p>
-                        <div class="d-grid">
-                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kerala Card -->
-            <div class="col-lg-4 col-md-6">
-                <div class="destination-card">
-                    <img src="{% static 'images/kerala.jpg' %}" class="card-img-top" alt="Kerala Backwaters">
-                    <div class="card-body">
-                        <h5 class="card-title">Kerala Serenity</h5>
-                        <p class="card-text text-muted">Backwaters & Ayurvedic retreats</p>
-                        <div class="d-grid">
-                            <a href="#" class="btn btn-outline-primary">View Itineraries</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-4" id="destinations-container">
+            <!-- Destinations will be rendered here -->
         </div>
     </section>
+
+    <script>
+        // JSON Data for Featured Destinations
+        const featuredDestinations = [
+            {
+                "id": 1,
+                "name": "Goa",
+                "image": "/static/images/goa.jpg",
+                "description": "Explore Portuguese heritage beaches"
+            },
+            {
+                "id": 2,
+                "name": "Rajasthan",
+                "image": "/static/images/rajasthan.jpg",
+                "description": "Desert palaces & cultural festivals"
+            },
+            {
+                "id": 3,
+                "name": "Kerala",
+                "image": "/static/images/kerala.jpg",
+                "description": "Backwaters & Ayurvedic retreats"
+            }
+        ];
+
+        // Function to render destinations
+        function renderDestinations(destinations) {
+            const container = document.getElementById("destinations-container");
+            container.innerHTML = "";
+
+            destinations.forEach((destination) => {
+                const cardHtml = `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="destination-card">
+                            <img src="${destination.image}" class="card-img-top" alt="${destination.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${destination.name}</h5>
+                                <p class="card-text text-muted">${destination.description}</p>
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-primary">View Itineraries</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML("beforeend", cardHtml);
+            });
+        }
+
+        // Render destinations on page load
+        renderDestinations(featuredDestinations);
+    </script>
 
     <!-- Cultural Highlights Section -->
     <section class="cultural-section">
@@ -324,5 +343,9 @@
             });
         });
     </script>
+
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
 </body>
 </html>
