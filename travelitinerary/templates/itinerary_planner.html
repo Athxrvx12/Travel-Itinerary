@@ -1,2 +1,619 @@
-<h1>Plan Your Itinerary</h1>
-<p>Coming Soon...</p>
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<style>
+
+    .form-section {
+        background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        padding: 40px 0;
+        border-radius: 10px;
+    }
+
+    .plan-trip-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    .plan-trip-card:hover {
+        transform: translateY(-1.5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background: linear-gradient(to right, #FF6B6B, #FF8E53);
+        color: white;
+        border: none;
+        border-radius: 15px 15px 0 0;
+        padding: 15px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #FF6B6B;
+        box-shadow: none;
+    }
+
+    .form-select {
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-select:focus {
+        border-color: #FF6B6B;
+        box-shadow: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #FF6B6B, #FF8E53);
+        border: none;
+        border-radius: 8px;
+        padding: 12px 30px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .map-container {
+        height: 400px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .review-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-card .card-header {
+        background: linear-gradient(to right, #4ECDC4, #56C596);
+        color: white;
+        border: none;
+        padding: 12px;
+    }
+
+    .itinerary-tag {
+        display: inline-block;
+        padding: 5px 12px;
+        background: rgba(78, 205, 196, 0.1);
+        color: #4ECDC4;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .itinerary-tag:hover {
+        background: #4ECDC4;
+        color: white;
+    }
+
+    .accordion-button {
+        background-color: #f8f9fa;
+        color: #333;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .accordion-button:hover {
+        background-color: #e9ecef;
+    }
+
+    .accordion-body {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .api-integration-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .api-integration-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .api-integration-card .card-body {
+        padding: 25px;
+    }
+
+    .api-integration-card .card-body i {
+        color: #FF6B6B;
+    }
+    .hero-section {
+    height: 50vh;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.zoom-in {
+        transition: transform 0.3s ease;
+    }
+
+    .zoom-in:hover {
+        transform: scale(1.02);
+    }
+    .loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* Add the necessary styling */
+.alert-container {
+    position: fixed; /* Stay in place */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    z-index: 1000; /* Ensure it's on top */
+}
+    
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <img src="{% static 'images/plan_trip_bg.jpg' %}" alt="Plan Trip" class="hero-image">
+    <div class="container text-center text-white">
+        <h1 class="display-4 fw-bold mb-4">Plan Your Perfect Journey</h1>
+        <p class="lead">Create custom itineraries tailored to your preferences</p>
+    </div>
+</div>
+<!-- Alert container -->
+<div class="alert-container">
+<!-- Success and error messages will appear here -->
+</div>
+<!-- Trip Planner Form -->
+<section class="form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card plan-trip-card shadow-lg rounded-4">
+                    <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                        <h4 class="mb-0">Plan Your Perfect Trip</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="tripPlannerForm">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="destination" class="form-label fw-semibold">Destination</label>
+                                    <select class="form-select" id="destination" required>
+                                        <option value="" selected disabled>Select a destination</option>
+                                        <option value="goa">Goa</option>
+                                        <option value="rajasthan">Rajasthan</option>
+                                        <option value="kerala">Kerala</option>
+                                        <option value="himachal">Himachal Pradesh</option>
+                                        <option value="andaman">Andaman & Nicobar</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="budget" class="form-label fw-semibold">Budget (₹)</label>
+                                    <input type="range" class="form-range" id="budget" min="5000" max="100000" step="1000" value="25000">
+                                    <div class="d-flex justify-content-between text-muted small">
+                                        <span>₹5,000</span>
+                                        <span id="budgetValue" class="fw-bold">₹25,000</span>
+                                        <span>₹100,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="tripDates" class="form-label fw-semibold">Travel Dates</label>
+                                    <input type="text" class="form-control" id="tripDates" placeholder="Select dates">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="travelers" class="form-label fw-semibold">Number of Travelers</label>
+                                    <input type="number" class="form-control" id="travelers" min="1" max="20" value="2">
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Trip Type</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="adventure">
+                                            <label class="form-check-label" for="adventure">Adventure</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="cultural">
+                                            <label class="form-check-label" for="cultural">Cultural</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="relaxation">
+                                            <label class="form-check-label" for="relaxation">Relaxation</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="wildlife">
+                                            <label class="form-check-label" for="wildlife">Wildlife</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="spiritual">
+                                            <label class="form-check-label" for="spiritual">Spiritual</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5 py-2 fw-bold rounded-pill">Generate Itinerary</button>
+                            </div>
+                            <div id="loader" class="loader mt-3" style="display:none;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Suggested Itineraries</h2>
+        <div class="row" id="itineraries-container">
+            <div class="loader" style="display: none;"></div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Plan Your Route</h2>
+        <div class="map-container" id="routeMap">
+        </div>
+        <div class="mt-3 text-center">
+            <button class="btn btn-outline-primary me-2 zoom-in" id="addStop">Add Stop</button>
+            <button class="btn btn-outline-success zoom-in" id="calculateRoute">Calculate Route</button>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Travel Services</h2>
+        <div class="row g-4">
+            <div class="col-md-4 zoom-in">
+                <div class="card api-integration-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-plane-departure fa-3x text-primary mb-3"></i>
+                        <h4>Flights</h4>
+                        <p>Search for the best flight deals for your trip</p>
+                        <button class="btn btn-sm btn-outline-primary" id="searchFlights">Search Flights</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 zoom-in">
+                <div class="card api-integration-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-train fa-3x text-primary mb-3"></i>
+                        <h4>Train Tickets</h4>
+                        <p>Book train tickets to explore India by rail</p>
+                        <button class="btn btn-sm btn-outline-primary" id="searchTrains">Search Trains</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 zoom-in">
+                <div class="card api-integration-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-hotel fa-3x text-primary mb-3"></i>
+                        <h4>Accommodations</h4>
+                        <p>Find hotels, homestays, and resorts</p>
+                        <button class="btn btn-sm btn-outline-primary" id="searchHotels">Search Hotels</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Traveler Reviews</h2>
+        <div class="row g-4" id="reviews-container">
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="flightsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search Flights</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="flightSearchForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="departureCity" class="form-label">From</label>
+                            <input type="text" class="form-control" id="departureCity" placeholder="Departure City">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="arrivalCity" class="form-label">To</label>
+                            <input type="text" class="form-control" id="arrivalCity" placeholder="Arrival City">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="departureDate" class="form-label">Departure Date</label>
+                            <input type="date" class="form-control" id="departureDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="returnDate" class="form-label">Return Date</label>
+                            <input type="date" class="form-control" id="returnDate">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Search Flights</button>
+                    </div>
+                </form>
+                <div id="flightResults" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css">
+
+<script>
+    // Sample data for itineraries (will be replaced with API data)
+    const itineraries = [
+        {
+            id: 1,
+            title: "Golden Triangle Tour",
+            description: "Explore Delhi, Agra, and Jaipur in this classic North Indian journey",
+            days: 7,
+            cost: 35000,
+            image: "{% static 'images/golden-triangle.jpg' %}",
+            tags: ["Cultural", "Historical", "Popular"]
+        },
+        {
+            id: 2,
+            title: "Kerala Backwaters",
+            description: "Relax and rejuvenate along the serene backwaters of Kerala",
+            days: 5,
+            cost: 40000,
+            image: "{% static 'images/kerala.jpg' %}",
+            tags: ["Relaxation", "Nature", "Luxury"]
+        },
+        {
+            id: 3,
+            title: "Himalayan Adventure",
+            description: "Trek through stunning mountain trails in Himachal Pradesh",
+            days: 8,
+            cost: 30000,
+            image: "{% static 'images/himachal.jpg' %}",
+            tags: ["Adventure", "Trekking", "Wildlife"]
+        }
+    ];
+
+    // Sample data for reviews (will be replaced with API data)
+    const reviews = [
+        {
+            id: 1,
+            name: "Priya Sharma",
+            destination: "Rajasthan",
+            rating: 5,
+            comment: "Our Rajasthan trip was absolutely magical! The itinerary was perfectly planned with a mix of historical sites and local experiences.",
+            date: "March 15, 2025"
+        },
+        {
+            id: 2,
+            name: "Rahul Patel",
+            destination: "Kerala",
+            rating: 4,
+            comment: "The Kerala backwaters were so peaceful. Highly recommend the houseboat stay and ayurvedic spa treatments.",
+            date: "February 22, 2025"
+        },
+        {
+            id: 3,
+            name: "Aisha Khan",
+            destination: "Himachal Pradesh",
+            rating: 5,
+            comment: "The trekking routes in Himachal were breathtaking. Our guide was knowledgeable and made the journey enjoyable even for beginners.",
+            date: "March 5, 2025"
+        }
+    ];
+    function displayMessage(message, type = 'success') {
+        const alertContainer = document.querySelector('.alert-container');
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type} alert-dismissible fade show`;
+        alert.setAttribute('role', 'alert');
+        alert.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        alertContainer.appendChild(alert);
+        
+        // Automatically remove the alert after 5 seconds
+        setTimeout(() => {
+            alert.remove();
+        }, 5000);
+    }
+
+    // Initialize the page when document is ready
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize date range picker
+        $('#tripDates').daterangepicker({
+            opens: 'center',
+            minDate: new Date(),
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
+        });
+        
+        // Initialize the map
+        const map = L.map('routeMap').setView([20.5937, 78.9629], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Update budget value display
+        document.getElementById('budget').addEventListener('input', function() {
+            document.getElementById('budgetValue').textContent = '₹' + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+    
+    // Function to show the loader
+    function showLoader() {
+        document.getElementById('loader').style.display = 'block';
+    }
+    
+    // Function to hide the loader
+    function hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+    }
+        // Handle form submission
+        document.getElementById('tripPlannerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+             showLoader(); // Show loader before API call
+          
+        // Simulate API call with setTimeout
+        setTimeout(() => {
+            // Simulate successful API response
+            hideLoader(); // Hide loader after API call is "done"
+            displayMessage("Itineraries generated successfully!", "success");
+            displayItineraries(itineraries);
+        }, 3000); // Simulate 3 seconds delay
+          
+        });
+        
+        // Display initial itineraries and reviews
+        displayReviews(reviews);
+        
+        // Setup API integration buttons
+        document.getElementById('searchFlights').addEventListener('click', function() {
+            $('#flightsModal').modal('show');
+        });
+        
+        // Map functionality
+        let markers = [];
+        document.getElementById('addStop').addEventListener('click', function() {
+            alert('Click on the map to add a stop to your route');
+            map.once('click', function(e) {
+                const marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+                markers.push(marker);
+            });
+        });
+        
+        document.getElementById('calculateRoute').addEventListener('click', function() {
+            if (markers.length < 2) {
+                alert('Please add at least two stops to calculate a route');
+                return;
+            }
+            
+            // In a real application, this would call a routing API
+            // For this demo, we'll just connect the markers with a line
+            const latlngs = markers.map(marker => marker.getLatLng());
+            L.polyline(latlngs, {color: 'blue'}).addTo(map);
+            
+            // Display estimated travel time and distance
+            alert('Route calculated! Estimated travel time: 5 hours 30 minutes, Distance: 320 km');
+        });
+    });
+
+    // Function to display itineraries
+    function displayItineraries(itineraries) {
+        const container = document.getElementById('itineraries-container');
+        container.innerHTML = '';
+        
+        itineraries.forEach(itinerary => {
+            const itineraryHtml = `
+                <div class="col-md-4">
+                    <div class="card plan-trip-card h-100 zoom-in">
+                        <img src="${itinerary.image}" class="card-img-top" alt="${itinerary.title}" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">${itinerary.title}</h5>
+                            <p class="card-text">${itinerary.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-calendar-day"></i> ${itinerary.days} days</span>
+                                <span><i class="fas fa-rupee-sign"></i> ${itinerary.cost.toLocaleString()}</span>
+                            </div>
+                            <div class="mt-2">
+                                ${itinerary.tags.map(tag => `<span class="itinerary-tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <a href="#" class="btn btn-primary btn-sm d-block">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += itineraryHtml;
+        });
+    }
+
+    // Function to display reviews
+    function displayReviews(reviews) {
+        const container = document.getElementById('reviews-container');
+        container.innerHTML = '';
+        
+        reviews.forEach(review => {
+            const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            
+            const reviewHtml = `
+                <div class="col-md-4 zoom-in">
+                    <div class="review-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>${review.name}</span>
+                            <span>${stars}</span>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">${review.destination}</h6>
+                            <p class="card-text">"${review.comment}"</p>
+                            <div class="text-end text-muted small">${review.date}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += reviewHtml;
+        });
+    }
+</script>
+{% endblock %}

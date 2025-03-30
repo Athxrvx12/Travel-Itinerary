@@ -43,3 +43,6 @@ def cultural_experiences(request):
 
 def sustainable_travel(request):
     return render(request, 'sustainable_travel.html')
+
+def plan_trip(request):
+    return render(request, 'plan_trip.html')
