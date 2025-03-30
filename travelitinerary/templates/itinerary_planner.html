@@ -1,4 +1,3 @@
-
 {% load static %}
 
 {% block content %}
@@ -190,9 +189,342 @@
     right: 20px; /* Distance from the right */
     z-index: 1000; /* Ensure it's on top */
 }
+
+/* Enhanced Navbar */
+    .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+    .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(5px);
+        }
+
+    .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+    .navbar-brand:hover {
+            color: #ff5252 !important;
+        }
+
+    .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin: 0 15px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+    .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+    .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+    .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 40px 0;
+            border-radius: 15px; /* Rounded corners for the section */
+        }
+    
+        .plan-trip-card {
+            border: none;
+            border-radius: 20px; /* More rounded corners for the card */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+            overflow: hidden;
+        }
+    
+        .card-header {
+            background: linear-gradient(to right, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            border-radius: 20px 20px 0 0; /* Rounded corners for the header */
+            padding: 20px;
+        }
+    
+        .card-header h4 {
+            font-weight: bold;
+            margin-bottom: 0; /* Remove default margin for heading */
+        }
+    
+        .form-control,
+        .form-select {
+            border-radius: 10px; /* Rounded corners for form elements */
+            border-color: #ced4da;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 12px; /* Increase padding for a better feel */
+        }
+    
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #FF6B6B;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25); /* Highlight on focus */
+        }
+    
+        .form-range {
+            padding: 0;
+            border-radius: 10px;
+        }
+    
+        .form-check-input {
+            border-radius: 50%;
+            margin-top: 0.3rem; /* Adjust checkbox alignment */
+        }
+    
+        .form-check-label {
+            margin-left: 0.5rem;
+            font-weight: 500;
+        }
+    
+        .btn-primary {
+            background: linear-gradient(to right, #FF6B6B, #FF8E53);
+            border: none;
+            border-radius: 50px; /* Rounded button */
+            padding: 14px 35px; /* Larger button */
+            font-weight: 600; /* Bold font for button text */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    
+        .form-label {
+            font-weight: 600;
+            color: #343a40;
+        }
+    
+        .trip-type-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    
+        .trip-type-options .form-check {
+            margin-bottom: 0.5rem;
+        }
+         .form-section .shadow-lg {
+                box-shadow: 0 12px 30px rgba(0,0,0,0.1) !important;
+            }
+    
+            .loader {
+                border: 4px solid #f3f3f3;
+                border-top: 4px solid #3498db;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 2s linear infinite;
+                margin: 15px auto;
+            }
+    
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+              .hero-section {
+                height: 50vh;
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+    
+            .hero-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -1;
+            }
+            footer {
+                background:rgb(57, 60, 62);
+                text-align: center;
+                padding: 7px 0;
+                font-size: 0.9rem;
+                color: white;  
+            }
+    
+            footer {
+                background: rgb(57, 60, 62);
+                text-align: center;
+                padding: 7px 0;
+                font-size: 0.9rem;
+                color: white;
+            }
+            
+            footer ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            footer ul li {
+                margin-bottom: 10px;
+            }
+            
+            footer a {
+                color: white;
+                text-decoration: none;
+            }
+            
+            footer a:hover {
+                color: #ccc;
+            }
+
+            /* Style for Traveler Reviews Section */
+    .reviews-section {
+        background: #f8f9fa;
+        padding: 40px 0;
+        border-radius: 15px; /* Rounded corners for the section */
+        margin-top: 30px; /* Add margin for spacing */
+    }
+
+    .review-card {
+        border: none;
+        border-radius: 20px; /* Rounded corners for the cards */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtler shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .review-card:hover {
+        transform: translateY(-5px); /* Lift the card on hover */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover */
+    }
+
+    .review-card .card-header {
+        background: linear-gradient(to right, #4ECDC4, #56C596);
+        color: white;
+        border: none;
+        border-radius: 20px 20px 0 0; /* Rounded corners for the card header */
+        padding: 15px;
+    }
+
+    .review-card .card-body {
+        padding: 20px;
+    }
+
+    .review-card .card-title {
+        font-weight: 600;
+        color: #343a40; /* Darken the title for better readability */
+    }
+
+    .reviews-section .text-muted {
+        color: #6c757d !important; /* Ensure the text is readable */
+    }
+
+    /* Style for Flights Modal */
+    .modal-content {
+        border-radius: 20px; /* Rounded corners for the modal */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhance the shadow */
+        border: none;
+    }
+
+    .modal-header {
+        background: linear-gradient(to right, #FF6B6B, #FF8E53);
+        color: white;
+        border: none;
+        border-radius: 20px 20px 0 0; /* Rounded corners for the modal header */
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-weight: bold;
+    }
+
+    .modal-body .form-control {
+        border-radius: 15px; /* Rounded corners for input fields */
+        border-color: #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        padding: 12px; /* More padding for a better feel */
+    }
+
+    .modal-body .form-control:focus {
+        border-color: #FF6B6B;
+        box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25); /* Highlight on focus */
+    }
+
+    .modal-body .btn-primary {
+        background: linear-gradient(to right, #FF6B6B, #FF8E53);
+        border: none;
+        border-radius: 50px; /* Rounded button */
+        padding: 14px 35px; /* Larger button */
+        font-weight: 600; /* Bold font for button text */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .modal-body .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-body label {
+        font-weight: 600;
+        color: #343a40; /* Darken label text */
+    }
+        /* Apply same zoom-in effect on the cards */
+        #reviews-container .col-md-4 {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        #reviews-container .col-md-4:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
     
 </style>
-
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/india-flag-icon.png' %}" alt="Logo" width="40" class="me-2">
+            Incredible India
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cultural-experiences' %}">Cultural Experiences</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'itinerary-planner' %}">Plan Trip</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sustainable-travel' %}">Sustainable Travel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <!-- Hero Section -->
 <div class="hero-section">
     <img src="{% static 'images/plan_trip_bg.jpg' %}" alt="Plan Trip" class="hero-image">
@@ -210,15 +542,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="card plan-trip-card shadow-lg rounded-4">
-                    <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                <div class="card plan-trip-card shadow-lg">
+                    <div class="card-header text-center">
                         <h4 class="mb-0">Plan Your Perfect Trip</h4>
                     </div>
                     <div class="card-body p-4">
                         <form id="tripPlannerForm">
                             <div class="row mb-4">
                                 <div class="col-md-6">
-                                    <label for="destination" class="form-label fw-semibold">Destination</label>
+                                    <label for="destination" class="form-label">Destination</label>
                                     <select class="form-select" id="destination" required>
                                         <option value="" selected disabled>Select a destination</option>
                                         <option value="goa">Goa</option>
@@ -229,7 +561,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="budget" class="form-label fw-semibold">Budget (₹)</label>
+                                    <label for="budget" class="form-label">Budget (₹)</label>
                                     <input type="range" class="form-range" id="budget" min="5000" max="100000" step="1000" value="25000">
                                     <div class="d-flex justify-content-between text-muted small">
                                         <span>₹5,000</span>
@@ -238,22 +570,22 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-4">
                                 <div class="col-md-6">
-                                    <label for="tripDates" class="form-label fw-semibold">Travel Dates</label>
+                                    <label for="tripDates" class="form-label">Travel Dates</label>
                                     <input type="text" class="form-control" id="tripDates" placeholder="Select dates">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="travelers" class="form-label fw-semibold">Number of Travelers</label>
+                                    <label for="travelers" class="form-label">Number of Travelers</label>
                                     <input type="number" class="form-control" id="travelers" min="1" max="20" value="2">
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-4">
                                 <div class="col-12">
-                                    <label class="form-label fw-semibold">Trip Type</label>
-                                    <div class="d-flex flex-wrap gap-3">
+                                    <label class="form-label">Trip Type</label>
+                                    <div class="trip-type-options">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="adventure">
                                             <label class="form-check-label" for="adventure">Adventure</label>
@@ -277,34 +609,15 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary px-5 py-2 fw-bold rounded-pill">Generate Itinerary</button>
+                                <button type="submit" class="btn btn-primary px-5">Generate Itinerary</button>
                             </div>
                             <div id="loader" class="loader mt-3" style="display:none;"></div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<section class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Suggested Itineraries</h2>
-        <div class="row" id="itineraries-container">
-            <div class="loader" style="display: none;"></div>
-        </div>
-    </div>
-</section>
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-4">Plan Your Route</h2>
-        <div class="map-container" id="routeMap">
-        </div>
-        <div class="mt-3 text-center">
-            <button class="btn btn-outline-primary me-2 zoom-in" id="addStop">Add Stop</button>
-            <button class="btn btn-outline-success zoom-in" id="calculateRoute">Calculate Route</button>
         </div>
     </div>
 </section>
@@ -392,6 +705,47 @@
         </div>
     </div>
 </div>
+<hr>
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
+                <p>Phone: +1234567890</p>
+                <p>Address: 123 Main St, New York, NY</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Navigation</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Legal</h5>
+                {% comment %} <ul class="list-unstyled">
+                    <li><a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms-of-use' %}">Terms of Use</a></li>
+                </ul> {% endcomment %}
+                <p>&copy; 2025 My Company. All Rights Reserved.</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <a href="#" class="btn btn-outline-light btn-sm">Back to Top</a>
+                <a href="https://www.facebook.com/example" target="_blank" class="ms-2">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.twitter.com/example" target="_blank" class="ms-2">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
